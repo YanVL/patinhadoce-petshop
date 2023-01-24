@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class MarcarController extends Controller
 {
     public function marcar() {
-        echo 'Marcar Serviço';
+        return view('app.marcar');
     }
 }

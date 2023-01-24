@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class AgendamentosController extends Controller
 {
     public function agendamentos() {
-        echo 'Ver agendamentos';
+        return view('app.agendamentos');
     }
 }
