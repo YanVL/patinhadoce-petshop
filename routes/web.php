@@ -28,6 +28,7 @@ Route::fallback(function() {
     echo 'A rota acessada não existe.
     <a href="'.route('app.principal').'">clique aqui</a> para ir para a página inicial.';
 });
+    
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
