@@ -15,9 +15,13 @@ return new class extends Migration
     {
         Schema::create('servicos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pet_id');
             $table->timestamps();
             $table->integer('tipo');
             $table->float('preco', 3, 2);
+
+            //constraint
+            $table->foreign('pet_id')->references('id')->on('pets');
         });
     }
 
@@ -28,6 +32,11 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicos');
+        Schema::dropIfExists('servicos', function (Blueprint $table) {
+            //removendo a fk
+            $table->dropForeign('servicos_pet_id_foreign');
+            //removendo coluna
+            $table->dropColumn(['id', 'timestamps', 'integer', 'preco']);
+        });
     }
 };

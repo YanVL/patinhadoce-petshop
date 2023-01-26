@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nome', 50);
             $table->string('telefone', 20);
             $table->string('email', 50);
-            $table->integer('genero');
+            $table->integer('genero')->nullable();
             $table->string('endereco', 100);
         });
     }
@@ -31,6 +31,14 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dados_tutors');
+        Schema::dropIfExists('dados_tutors', function (Blueprint $table) {
+            $table->dropColum('id');
+            $table->dropColum('timestamps');
+            $table->dropColum('nome');
+            $table->dropColum('telefone');
+            $table->dropColum('email');
+            $table->dropColum('genero');
+            $table->dropColum('endereco');
+        });
     }
 };

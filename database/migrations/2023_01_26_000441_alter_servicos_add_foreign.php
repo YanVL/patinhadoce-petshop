@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('funcionarios', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('nome', 50);
-            $table->integer('funcao');
+        Schema::table('servicos', function (Blueprint $table) {
+            $table->unsignedBigInteger('funcionario_id');
+            //constraint
+            $table->foreign('funcionario_id')->references('id')->on('funcionarios');
         });
     }
 
@@ -28,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funcionarios', function (Blueprint $table) {
-            $table->dropColumn('id', 'timestamps', 'nome', 'funcao');
-        });
+        //
     }
 };
