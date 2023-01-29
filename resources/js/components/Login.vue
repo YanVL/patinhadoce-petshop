@@ -3,9 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Login</div>
+                    <div class="card-header background-1 text-black-50">Área do Tutor</div>
 
-                    <div class="card-body">
+                    <div class="card-body background-2">
                         <form method="POST" action="">
                             <input type="hidden" name="_token" :value="csrf_token">
                             <div class="row mb-3">
@@ -40,8 +40,8 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
+                                    <button type="submit" class="btn btn-1">
+                                        Entrar
                                     </button>
 
                                     <a class="btn btn-link" href="">

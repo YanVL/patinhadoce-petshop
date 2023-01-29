@@ -20,15 +20,16 @@ Route::prefix('/usuario')->group(function () {
         ->name('app.principal');
     Route::get('/agendamentos', [App\Http\Controllers\AgendamentosController::class, 'agendamentos'])
         ->name('app.agendamentos');
-    Route::get('/marcar', [App\Http\Controllers\MarcarController::class, 'marcar'])
-        ->name('app.marcar');
+    Route::get('/marcar', function () {
+        return view('app.marcar');
+    })->name('marcar');
 });
 
-Route::fallback(function() {
+Route::fallback(function () {
     echo 'A rota acessada não existe.
-    <a href="'.route('app.principal').'">clique aqui</a> para ir para a página inicial.';
+    <a href="' . route('app.principal') . '">clique aqui</a> para ir para a página inicial.';
 });
-    
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

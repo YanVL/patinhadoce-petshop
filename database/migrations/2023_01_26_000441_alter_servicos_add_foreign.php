@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('servicos', function (Blueprint $table) {
-            $table->unsignedBigInteger('funcionario_id');
+            $table->unsignedBigInteger('funcionario_id')->after('pet_id');
             //constraint
             $table->foreign('funcionario_id')->references('id')->on('funcionarios');
         });
@@ -27,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('servicos', function (Blueprint $table) {
+            $table->dropColumn('id', 'timestamps', 'nome', 'funcao');
+        });
     }
 };

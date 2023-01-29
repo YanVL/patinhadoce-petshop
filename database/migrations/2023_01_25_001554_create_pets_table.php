@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dados_tutor_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->string('nome', 50);
             $table->string('especie', 15);
             $table->text('observacao', 200)->nullable();
 
             //constraint
-            $table->foreign('dados_tutor_id')->references('id')->on('dados_tutors');
-            $table->unique('dados_tutor_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unique('user_id');
         });
     }
 
@@ -36,7 +36,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('pets', function (Blueprint $table) {
             //removendo a fk
-            $table->dropForeign('pets_dados_tutor_id_foreign');
+            $table->dropForeign('pets_tutor_id_foreign');
             //removendo coluna
             $table->dropColum('id');
             $table->dropColum('timestamps');
