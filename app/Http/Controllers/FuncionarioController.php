@@ -21,7 +21,7 @@ class FuncionarioController extends Controller
     public function index()
     {
         $funcionario = $this->funcionario->all();
-        return $funcionario;
+        return response()->json($funcionario, 200);
     }
 
     /**

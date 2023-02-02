@@ -13,15 +13,15 @@ class Funcionario extends Model
     public function rules()
     {
         return [
-            'nome' => 'required',
-            'funcao' => 'required'
+            'nome' => 'required|min:2',
+            'funcao' => 'required|integer|digits_between:1,3'
         ];
     }
 
     public function feedback()
     {
         return [
-            'required' => 'O campo :attribute é obrigatório'
+            'required' => 'O campo :attribute é obrigatório',
         ];
     }
 }
