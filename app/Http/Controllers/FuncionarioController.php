@@ -14,7 +14,8 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        //
+        $funcionario = Funcionario::all();
+        return $funcionario;
     }
 
     /**
@@ -35,7 +36,8 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $funcionario = Funcionario::create($request->all());
+        return $funcionario;
     }
 
     /**
@@ -46,7 +48,7 @@ class FuncionarioController extends Controller
      */
     public function show(Funcionario $funcionario)
     {
-        //
+        return $funcionario;
     }
 
     /**
