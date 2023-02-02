@@ -13,23 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-
-Route::prefix('/usuario')->group(function () {
-    Route::get('/principal', [App\Http\Controllers\PrincipalController::class, 'principal'])
-        ->name('app.principal');
-    Route::get('/agendamentos', [App\Http\Controllers\AgendamentosController::class, 'agendamentos'])
-        ->name('app.agendamentos');
-    Route::get('/marcar', function () {
-        return view('app.marcar');
-    })->name('marcar');
-});
-
-Route::fallback(function () {
-    echo 'A rota acessada não existe.
-    <a href="' . route('app.principal') . '">clique aqui</a> para ir para a página inicial.';
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/pets', [App\Http\Controllers\PetController::class, 'index'])->name('pets');
+

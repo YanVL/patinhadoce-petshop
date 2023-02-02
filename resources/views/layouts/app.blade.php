@@ -40,15 +40,15 @@
                     <ul class="navbar-nav ms-auto">
                         <ul class="navbar-nav me-auto">
                             @auth
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('marcar') }}">Agende com a gente</a>
+                                {{-- <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('marcar') }}">Marcar um horário</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Horários marcados</a>
+                                    <a class="nav-link" href="{{ route('agendamentos') }}">Agendamentos</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Pets cadastrados</a>
-                                </li>
+                                    <a class="nav-link" href="{{ route('pets') }}">Pets cadastrados</a>
+                                </li> --}}
                             @endauth
                         </ul>
 

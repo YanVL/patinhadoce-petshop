@@ -19,6 +19,9 @@ import LoginComponent from './components/Login.vue';
 app.component('login-component', LoginComponent);
 import HomeComponent from './components/Home.vue';
 app.component('home-component', HomeComponent);
+import PetComponent from './components/CadastroPet.vue';
+app.component('cadastro-pet-component', PetComponent);
+
 
 /**
  * The following block of code may be used to automatically register your

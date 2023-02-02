@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    agendamentos
+    <cadastro-pet-component></cadastro-pet-component>
 @endsection
+

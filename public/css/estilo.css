@@ -58,3 +58,8 @@
 .btn-link:hover {
     color: #98674b;
 }
+
+/*----------Forms----------*/
+.form-control{
+    background-color: antiquewhite;
+}
