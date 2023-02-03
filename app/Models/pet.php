@@ -27,4 +27,10 @@ class Pet extends Model
             'required' => 'O campo :attribute é obrigatório'
         ];
     }
+
+    //relacionamento de user (tutor) com pet
+    public function user() {
+        //Um pet tem apenas UM dono (user)
+        return $this->belongsTo('App\Models\User');
+    }
 }

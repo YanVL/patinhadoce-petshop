@@ -23,7 +23,6 @@ return new class extends Migration
 
             //constraint
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unique('user_id');
         });
     }
 
@@ -36,7 +35,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('pets', function (Blueprint $table) {
             //removendo a fk
-            $table->dropForeign('pets_tutor_id_foreign');
+            $table->dropForeign('pets_user_id_foreign');
             //removendo coluna
             $table->dropColum('id');
             $table->dropColum('timestamps');

@@ -20,7 +20,7 @@ class PetController extends Controller
      */
     public function index()
     {
-        return response()->json($this->pet->all(), 200);
+        return response()->json($this->pet->with('user')->get(), 200);
     }
 
     /**
@@ -60,7 +60,7 @@ class PetController extends Controller
      */
     public function show($id)
     {
-        $pet = $this->pet->find($id);
+        $pet = $this->pet->with('user')->find($id);
         if ($pet === null) {
             return response()->json(['erro' => 'O recurso pesquisado não existe.'], 404);
         }

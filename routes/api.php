@@ -21,7 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('pet', PetController::class);
 Route::apiResource('funcionario', FuncionarioController::class);
 Route::apiResource('servico', ServicoController::class);
 Route::apiResource('pet', PetController::class);
