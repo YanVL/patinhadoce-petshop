@@ -18,9 +18,17 @@ class PetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->pet->with('user')->get(), 200);
+        $pets = array();
+
+        if($request->has('atributos')) {
+            $atributos = $request->atributos;
+            $pets = $this->pet->selectRaw($atributos)->with('user')->get();
+        } else {
+            $pets = $this->pet->with('user')->get();
+        }
+        return response()->json($pets, 200);
     }
 
     /**
