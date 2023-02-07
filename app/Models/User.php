@@ -57,10 +57,4 @@ class User extends Authenticatable
             get: fn ($value) => ucfirst((strtolower(strtok($value, " "))))
         );
     }
-
-    //relacionamento de pet com user (tutor)
-    public function pets() {
-        //Um TUTOR (user) possui MUITOS pets 
-        return $this->hasMany('App\Models\Pet');
-    }
 }

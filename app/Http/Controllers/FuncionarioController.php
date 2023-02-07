@@ -122,7 +122,7 @@ class FuncionarioController extends Controller
         $funcionario = $this->funcionario->find($id);
 
         if ($funcionario === null) {
-            return response()->json(['erro' => 'Exlusão falhou. O id pesquisado não existe.'], 404);
+            return response()->json(['erro' => 'Exclusão falhou. O id pesquisado não existe.'], 404);
         }
 
         $funcionario->delete();

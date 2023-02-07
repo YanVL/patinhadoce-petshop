@@ -5,19 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pet extends Model
+class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cliente_id', 'nome', 'especie', 'observacao'];
+    protected $fillable = [
+        'nome',
+        'telefone',
+        'endereco',
+    ];
 
     public function rules()
     {
         return [
-            'cliente_id' => 'exists:clientes,id',
             'nome' => 'required',
-            'especie' => 'required',
-            'observacao' 
+            'telefone' => 'required',
+            'endereco' => 'required' ,
         ];
     }
 
@@ -28,9 +31,9 @@ class Pet extends Model
         ];
     }
 
-    //relacionamento de Cliente (tutor) com pet
-    public function cliente() {
-        //Um pet tem apenas UM Cliente (tutor)
-        return $this->belongsTo('App\Models\Cliente');
+    //relacionamento de pet com user (tutor)
+    public function pets() {
+        //Um TUTOR (user) possui MUITOS pets 
+        return $this->hasMany('App\Models\Pet');
     }
 }
