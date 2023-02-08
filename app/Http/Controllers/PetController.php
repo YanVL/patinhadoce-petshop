@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
+use App\Repositories\PetRepository;
 use Illuminate\Http\Request;
 
 class PetController extends Controller
@@ -20,32 +21,24 @@ class PetController extends Controller
      */
     public function index(Request $request)
     {
-        $pets = array();
+        $petRepository = new PetRepository($this->pet);
 
-        //verificando se foram requisitados dados do cliente (tutor)
         if ($request->has('atributos_cliente')) {
-            $atributos_cliente = $request->atributos_cliente;
-            $pets = $this->pet->with('cliente:id,' . $atributos_cliente);
+            $atributos_cliente = 'cliente:id,' . $request->atributos_cliente;
+            $petRepository->selectAtributosRegistros($atributos_cliente);
         } else {
-            $pets = $this->pet->with('cliente');
+            $petRepository->selectAtributosRegistros('cliente');
         }
 
-        //aplicando condicoes (filtros) de pesquisa para o client
         if ($request->has('filtro')) {
-            $filtros = explode(';', $request->filtro);
-            foreach ($filtros as $key => $condicao) {
-                $condicaoDePesquisa = explode(':', $condicao);
-                $pets = $pets->where($condicaoDePesquisa[0], $condicaoDePesquisa[1], $condicaoDePesquisa[2]);
-            }
+            $petRepository->filtro($request->filtro);
         }
 
         if ($request->has('atributos')) {
-            $atributos = $request->atributos;
-            $pets = $pets->selectRaw($atributos)->get();
-        } else {
-            $pets = $pets->get();
+            $petRepository->selectAtributosCliente($request->atributos);
         }
-        return response()->json($pets, 200);
+
+        return response()->json($petRepository->getResultado(), 200);
     }
 
     /**

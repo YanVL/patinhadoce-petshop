@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
+use App\Repositories\FuncionarioRepository;
 use Illuminate\Http\Request;
 
 class FuncionarioController extends Controller
@@ -18,10 +19,26 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $funcionario = $this->funcionario->all();
-        return response()->json($funcionario, 200);
+        $funcionarioRepository = new FuncionarioRepository($this->funcionario);
+
+        if ($request->has('atributos_servicos')) {
+            $atributos_servicos = 'servicos:id,' . $request->atributos_servicos;
+            $funcionarioRepository->selectAtributosRegistros($atributos_servicos);
+        } else {
+            $funcionarioRepository->selectAtributosRegistros('servicos');
+        }
+
+        if ($request->has('filtro')) {
+            $funcionarioRepository->filtro($request->filtro);
+        }
+
+        if ($request->has('atributos')) {
+            $funcionarioRepository->selectAtributosCliente($request->atributos);
+        }
+
+        return response()->json($funcionarioRepository->getResultado(), 200);
     }
 
     /**
@@ -44,19 +61,22 @@ class FuncionarioController extends Controller
     {
         $request->validate($this->funcionario->rules(), $this->funcionario->feedback());
 
-        $funcionario = $this->funcionario->create($request->all());
+        $funcionario = $this->funcionario->create([
+            'nome' => $request->nome,
+            'funcao' => $request->funcao,
+        ]);
         return response()->json($funcionario, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Integer
+     * @param  Integer
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $funcionario = $this->funcionario->find($id);
+        $funcionario = $this->funcionario->with('servicos')->find($id);
         if ($funcionario === null) {
             return response()->json(['erro' => 'O recurso pesquisado não existe.'], 404);
         }
@@ -77,7 +97,7 @@ class FuncionarioController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateClienteRequest  $request
      * @param  Integer
      * @return \Illuminate\Http\Response
      */
@@ -87,7 +107,7 @@ class FuncionarioController extends Controller
         $funcionario = $this->funcionario->find($id);
 
         if ($funcionario === null) {
-            return response()->json(['erro' => 'Atualização falhou. O funcionário não existe.'], 404);
+            return response()->json(['erro' => 'Atualização falhou. O Funcionario informado não existe.'], 404);
         }
 
         if ($request->method() ===  'PATCH') {
@@ -126,6 +146,6 @@ class FuncionarioController extends Controller
         }
 
         $funcionario->delete();
-        return response()->json(['msg' => 'Funcionário removido com sucesso'], 200);
+        return response()->json(['msg' => 'Funcionario descadastrado com sucesso'], 200);
     }
 }

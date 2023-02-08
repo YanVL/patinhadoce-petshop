@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Repositories\ClienteRepository;
 use Illuminate\Http\Request;
-
 
 class ClienteController extends Controller
 {
@@ -21,32 +21,24 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = array();
+        $clienteRepository = new ClienteRepository($this->cliente);
 
         if ($request->has('atributos_pets')) {
-            $atributos_pets = $request->atributos_pets;
-            $clientes = $this->cliente->with('pets:id,' . $atributos_pets);
+            $atributos_pets = 'pets:id,' . $request->atributos_pets;
+            $clienteRepository->selectAtributosRegistros($atributos_pets);
         } else {
-            $clientes = $this->cliente->with('pets');
+            $clienteRepository->selectAtributosRegistros('pets');
         }
 
         if ($request->has('filtro')) {
-            $filtros = explode(';', $request->filtro);
-            foreach ($filtros as $key => $condicao) {
-
-                $condicaoDePesquisa = explode(':', $condicao);
-                $clientes = $clientes->where($condicaoDePesquisa[0], $condicaoDePesquisa[1], $condicaoDePesquisa[2]);
-            }
+            $clienteRepository->filtro($request->filtro);
         }
 
         if ($request->has('atributos')) {
-            $atributos = $request->atributos;
-            $clientes = $clientes->selectRaw($atributos)->get();
-        } else {
-            $clientes = $clientes->get();
+            $clienteRepository->selectAtributosCliente($request->atributos);
         }
 
-        return response()->json($clientes, 200);
+        return response()->json($clienteRepository->getResultado(), 200);
     }
 
     /**

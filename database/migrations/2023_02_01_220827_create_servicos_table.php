@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pet_id');
             $table->timestamps();
             $table->integer('tipo');
-            $table->float('preco', 3, 2);
+            $table->float('preco', 8, 2);
 
             //constraint
             $table->foreign('pet_id')->references('id')->on('pets');
