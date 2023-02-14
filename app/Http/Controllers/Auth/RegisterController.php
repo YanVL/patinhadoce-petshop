@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
+
 class RegisterController extends Controller
 {
     /*
@@ -52,8 +54,6 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'telefone' => ['required', 'string', 'min:11', 'max:11'],
-            'endereco' => ['required', 'string', 'min:5', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -66,12 +66,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'telefone' => $data['telefone'],
-            'endereco' => $data['endereco'],
             'password' => Hash::make($data['password']),
         ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Created Successfully',
+            'token' => $user->createToken('meuToken')->plainTextToken
+        ], 200);
     }
 }
